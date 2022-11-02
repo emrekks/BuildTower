@@ -331,8 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 8737851031120780574, guid: e465ca027f1912149bfda403f4e80cc5, type: 3}
-  firstCube: {fileID: 881826711900206941}
-  currentCube: {fileID: 0}
+  lastCube: {fileID: 881826711900206941}
   dropPartCube: {fileID: 1110074368976454650, guid: 5eac7803c9fa3f14eb8891faa37b37e4, type: 3}
 --- !u!4 &1408385163
 Transform:

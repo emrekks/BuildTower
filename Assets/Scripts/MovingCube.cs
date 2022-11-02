@@ -9,15 +9,20 @@ public class MovingCube : MonoBehaviour
 {
     public Rigidbody rb;
     
-    public float speed = 5f;
+    [Tooltip("Speed of cube")]public float speed = 5f; 
     
-    public bool directionChanger;
+    [Tooltip("Changing direction between x and z")]public bool directionChanger; 
     
-    public float y;
+    [Tooltip("Height of cube")]public float y;
     
-    public float range;
+    [Tooltip("Determines the distance between two destinations")]public float range;
 
-    public bool clicked = false;
+    [Tooltip("Stops the update function when left click is pressed")]public bool clicked = false;
+
+    private void Start()
+    {
+        rb.useGravity = false;
+    }
 
     private void Update()
     {
@@ -26,8 +31,9 @@ public class MovingCube : MonoBehaviour
             rb.useGravity = true;
             return;
         }
+        
         Vector3 movement = directionChanger ? new Vector3(Mathf.Cos(Time.time * speed) * range, y, 0) : new Vector3(0, y, Mathf.Cos(Time.time * speed) * range);
+        
         transform.position = movement;
-        rb.useGravity = false;
     }
 }

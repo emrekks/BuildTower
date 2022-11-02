@@ -6,82 +6,76 @@ using UnityEngine.EventSystems;
 
 public class CubeManager : MonoBehaviour
 {
-    public MovingCube prefab;
+    public MovingCube prefab; //Prefab of cube
 
-    public GameObject firstCube;
+    public GameObject lastCube; //Last cube placed
 
-    public MovingCube currentCube;
+    public GameObject dropPartCube; //Prefab of the falling piece from the shattered cube
+    
+    private MovingCube _currentCube; //Current cube moving
 
-    public GameObject dropPartCube;
+    private bool _gameOver = false; //Check gameover
 
-    private bool gameOver = false;
+    private bool firstTimeStartGame = false; //Using for spawn condition
 
     private void Start()
     {
-        Invoke("SpawnObject", 2f);
+        Invoke("SpawnNewCube", 2f);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && currentCube != null && !gameOver)
+        if (Input.GetMouseButtonDown(0) && _currentCube != null && !_gameOver)
         {
-            currentCube.clicked = true;
+            _currentCube.clicked = true; //Stop movement of cube
             
             CheckPosition();
-        }
-
-
-        
+        }      
     }
-    
-    public void SpawnObject()
-    {
-        MovingCube newCube = Instantiate(prefab, transform.position, Quaternion.identity, transform);
-       
-        currentCube = newCube.GetComponent<MovingCube>();
-    }
-    
-    
+
     private void CheckPosition()
     {
-        float contact = currentCube.transform.position.x - firstCube.transform.position.x;
+        float contact = _currentCube.transform.position.x - lastCube.transform.position.x;
 
-        if (Mathf.Abs(contact) >= firstCube.transform.localScale.x)
-        {
-            firstCube = null;
-            currentCube = null;
-            gameOver = true;
-            Debug.Log("Game Finished");
-        }
-
+        if (Mathf.Abs(contact) >= lastCube.transform.localScale.x) GameFinished();
+        
         float direction = contact > 0 ? 1f : -1f;
         
-        float newSize = firstCube.transform.localScale.x - Math.Abs(contact);
+        float newSize = lastCube.transform.localScale.x - Math.Abs(contact);
         
-        float fallingBlockSize = currentCube.transform.localScale.x - newSize;
+        float fallingBlockSize = _currentCube.transform.localScale.x - newSize;
 
-        float newPosition = firstCube.transform.position.x + (contact / 2);
-        
-        currentCube.transform.localScale = new Vector3(newSize, currentCube.transform.localScale.y, currentCube.transform.localScale.z);
-        
-        currentCube.transform.position = new Vector3(newPosition, currentCube.transform.position.y, currentCube.transform.position.z);
+        float newPosition = lastCube.transform.position.x + (contact / 2);
 
-        float firstCubeCorner = currentCube.transform.position.x + (newSize / 2f * direction);
+        ChangeLocalScale(_currentCube.transform, newSize);
+
+        ChangePosition(_currentCube.transform, newPosition);
+
+        float lastCubeCorner = _currentCube.transform.position.x + (newSize / 2f * direction); //the edge of the last cube finds its position to place the falling cube
         
-        float fallingBlockPosition = firstCubeCorner + fallingBlockSize / 2 * direction;
+        float fallingBlockPosition = lastCubeCorner + fallingBlockSize / 2 * direction; //places the falling cube next to the current cube
 
         SpawnDropCube(fallingBlockPosition, fallingBlockSize);
         
-        firstCube = currentCube.gameObject;
+        lastCube = _currentCube.gameObject;
 
-        currentCube = null;
+        _currentCube = null;
 
         Invoke("SpawnNewCube", 2f);
     }
 
+    private void ChangeLocalScale(Transform trans, float size)
+    {
+        trans.localScale = new Vector3(size, transform.localScale.y, trans.localScale.z);
+    }
+    
+    private void ChangePosition(Transform trans, float position)
+    {
+        trans.position = new Vector3(position, transform.position.y, trans.position.z);
+    }
     private void SpawnDropCube(float fallingPartPosition, float fallingBlockSize)
     {
-        GameObject droppedPart = Instantiate(dropPartCube, new Vector3(fallingPartPosition, currentCube.transform.position.y, currentCube.transform.position.z), Quaternion.identity, transform);
+        GameObject droppedPart = Instantiate(dropPartCube, new Vector3(fallingPartPosition, _currentCube.transform.position.y, _currentCube.transform.position.z), Quaternion.identity, transform);
         
         droppedPart.transform.localScale = new Vector3(fallingBlockSize, droppedPart.transform.localScale.y, droppedPart.transform.localScale.z);
        
@@ -90,11 +84,24 @@ public class CubeManager : MonoBehaviour
 
     private void SpawnNewCube()
     {
-       var newObj = Instantiate(prefab, firstCube.transform.position, Quaternion.identity, transform);
+       var newObj = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+
+       if (firstTimeStartGame)
+       {
+           newObj.transform.localScale = lastCube.transform.localScale;
+       }
+
+       _currentCube = newObj;
        
-       newObj.transform.localScale = firstCube.transform.localScale;
-       
-       currentCube = newObj;
+       firstTimeStartGame = true;
+    }
+
+    private void GameFinished()
+    {
+        lastCube = null;
+        _currentCube = null;
+        _gameOver = true;
+        Debug.Log("Game Finished");
     }
    
 }
