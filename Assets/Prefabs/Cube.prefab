@@ -112,8 +112,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7808533992877075194}
+  renderer: {fileID: 544850998707414711}
   speed: 1
-  directionChanger: 1
+  directionChanger: 0
   y: 5
   range: 16
   clicked: 0

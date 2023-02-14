@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class MovingCube : MonoBehaviour
 {
     public Rigidbody rb;
+
+    public MeshRenderer renderer;
     
     [Tooltip("Speed of cube")]public float speed = 5f; 
     
@@ -22,6 +25,8 @@ public class MovingCube : MonoBehaviour
     private void Start()
     {
         rb.useGravity = false;
+
+        renderer.material.color = Random.ColorHSV(0f, 1f, 0.5f, 1f, 0.5f, 1f);
     }
 
     private void Update()
