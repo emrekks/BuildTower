@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Random = UnityEngine.Random;
+
 
 public class CubeSpawner : MonoBehaviour
 {
@@ -13,17 +9,19 @@ public class CubeSpawner : MonoBehaviour
 
     public void SpawnCube()
     {
-        var cube = Instantiate(cubePrefab);
+        var cube = ObjectPooling.instance.GetPooledObject();
         
-        if (MovingCube.LastCube != null && MovingCube.LastCube.gameObject != GameObject.Find("FirstCube"))
+        ObjectPooling.instance.activeCubeCount++;
+
+        cube.gameObject.SetActive(true);
+        
+        ObjectPooling.instance.BackToPool();
+        
+        if (MovingCube.LastCube != null && MovingCube.LastCube != GameManager.FirstCube)
         {
-            float x = moveDirection == MoveDirection.X
-                ? transform.position.x
-                : MovingCube.LastCube.transform.position.x;
+            float x = moveDirection == MoveDirection.X ? transform.position.x : MovingCube.LastCube.transform.position.x;
             
-            float z = moveDirection == MoveDirection.Z
-                ? transform.position.z
-                : MovingCube.LastCube.transform.position.z;
+            float z = moveDirection == MoveDirection.Z ? transform.position.z : MovingCube.LastCube.transform.position.z;
             
             cube.transform.position = new Vector3(x, MovingCube.LastCube.transform.position.y + cubePrefab.transform.localScale.y, z);
         }
@@ -39,6 +37,7 @@ public class CubeSpawner : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
+      
         Gizmos.DrawWireCube(transform.position, cubePrefab.transform.localScale);
     }
 

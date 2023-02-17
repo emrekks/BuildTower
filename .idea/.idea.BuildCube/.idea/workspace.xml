@@ -7,6 +7,10 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ObjectPooling.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -42,7 +46,7 @@
       <method v="2" />
     </configuration>
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.7f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="E:\Unity 2021.3.7f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\Raichus\Desktop\BuildCube -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="C:\Users\Raichus\Desktop\BuildCube" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -83,6 +87,11 @@
       <workItem from="1667405103295" duration="124000" />
       <workItem from="1676368308444" duration="5646000" />
       <workItem from="1676455932415" duration="16235000" />
+      <workItem from="1676538358720" duration="6722000" />
+      <workItem from="1676553884285" duration="8124000" />
+      <workItem from="1676562368126" duration="666000" />
+      <workItem from="1676583239055" duration="8435000" />
+      <workItem from="1676591774153" duration="733000" />
     </task>
     <servers />
   </component>
@@ -94,5 +103,50 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
+          <line>74</line>
+          <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="70" containingFunctionPresentation="method 'GameOver'">
+            <startOffsets>
+              <option value="1645" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1671" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
+          <line>162</line>
+          <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="158" containingFunctionPresentation="method 'SpawnDropPartOfCube'">
+            <startOffsets>
+              <option value="4679" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4737" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
+          <line>37</line>
+          <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="33" containingFunctionPresentation="method 'GetRandomColor'">
+            <startOffsets>
+              <option value="919" />
+            </startOffsets>
+            <endOffsets>
+              <option value="956" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
