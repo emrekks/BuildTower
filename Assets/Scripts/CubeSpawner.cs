@@ -10,7 +10,7 @@ public class CubeSpawner : MonoBehaviour
     public void SpawnCube()
     {
         var cube = ObjectPooling.instance.GetPooledObject();
-        
+
         ObjectPooling.instance.activeCubeCount++;
 
         cube.gameObject.SetActive(true);

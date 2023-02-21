@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
+   [HideInInspector] public int activeCubeCount;
+   
    [SerializeField] private MovingCube cubePrefab;
   
    [SerializeField] private List<MovingCube> pooledCubes = new List<MovingCube>();
  
    [SerializeField] private int amountToPool;
-   
-   [HideInInspector] public int activeCubeCount;
-  
+
    private int _backToPoolIndex;
+
+   private int _scoreSave = 25;
   
    #region Singleton
  
@@ -33,15 +35,15 @@ public class ObjectPooling : MonoBehaviour
       for(int i = 0; i < amountToPool; i++)
       {
          cube = Instantiate(cubePrefab);
-         
-         cube.gameObject.SetActive(false);
-        
+
          pooledCubes.Add(cube);
       }
    }
-   
+
    public MovingCube GetPooledObject()
    {
+      IncreaseSpeed();
+      
       for(int i = 0; i < amountToPool; i++)
       {
          if(!pooledCubes[i].gameObject.activeInHierarchy)
@@ -49,7 +51,21 @@ public class ObjectPooling : MonoBehaviour
             return pooledCubes[i];
          }
       }
+      
       return null;
+   }
+
+   public void IncreaseSpeed()
+   {
+      if (GameManager.ScoreStatic > _scoreSave)
+      {
+         _scoreSave += 25;
+         
+         foreach (var cubes in pooledCubes)
+         {
+            cubes.moveSpeed += 0.25f;
+         }
+      }
    }
 
    public void BackToPool()

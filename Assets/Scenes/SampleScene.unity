@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 8737851031120780574, guid: e465ca027f1912149bfda403f4e80cc5, type: 3}
   pooledCubes: []
-  amountToPool: 25
+  amountToPool: 30
   activeCubeCount: 0
 --- !u!1 &317595369
 GameObject:

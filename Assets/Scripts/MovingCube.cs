@@ -4,31 +4,38 @@ using UnityEngine.SceneManagement;
 public class MovingCube : MonoBehaviour
 {
    public static MovingCube CurrentCube { get; private set; }
+  
    public static MovingCube LastCube { get; private set; }
 
    public Color[] color;
-   private Color _firstColor;
-   private bool _changeColor;
-   private bool _backToFirstColor;
+   
    public Renderer renderer;
  
-   public MoveDirection MoveDirection { get; set; }
-
-   private MaterialPropertyBlock _materialPropertyBlock;
-
-   [SerializeField] private int moveSpeed = 2;
-   [SerializeField] private float tolerance = 0.03f;
-
    public ParticleSystem comboParticleSystem;
    
-   private int m_MoveSpeed;
+   public MoveDirection MoveDirection { get; set; }
 
+   public float moveSpeed = 2;
+   
+   [SerializeField] private float tolerance = 0.03f;
+   
+   private MaterialPropertyBlock _materialPropertyBlock;
+   
+   private Color _firstColor;
+   
+   private bool _changeColor;
+  
+   private bool _backToFirstColor;
+   
+   private float m_MoveSpeed;
+
+   
    private void OnEnable()
    {
       comboParticleSystem = GameManager.particalSystem;
-               
+
       m_MoveSpeed = moveSpeed;
-      
+
       if (LastCube == null)
       {
          LastCube = GameManager.FirstCube;
@@ -36,7 +43,7 @@ public class MovingCube : MonoBehaviour
 
       CurrentCube = this;
 
-      _firstColor = GetRandomColor();
+      _firstColor = GetColor();
 
       GameManager.IncreaseColorIndex(color.Length);
 
@@ -49,7 +56,7 @@ public class MovingCube : MonoBehaviour
       renderer.SetPropertyBlock(_materialPropertyBlock);
    }
 
-   private Color GetRandomColor()
+   private Color GetColor()
    {
       return color[GameManager.ColorIndex];
    }
@@ -196,6 +203,8 @@ public class MovingCube : MonoBehaviour
       comboParticleSystem.gameObject.SetActive(true);
      
       comboParticleSystem.Play();
+
+      GameManager.Combo++;
    }
 
    private void SpawnDropPartOfCube(float fallingBlockZPosition, float fallingBlockSize)
@@ -217,10 +226,14 @@ public class MovingCube : MonoBehaviour
       }
      
       cube.AddComponent<Rigidbody>();
+
+      _materialPropertyBlock.SetColor("_Color", _firstColor);
      
       cube.GetComponent<Renderer>().SetPropertyBlock(_materialPropertyBlock);
+      
+      GameManager.Combo = 0;
 
-      Destroy(cube.gameObject, 1f);
+      Destroy(cube.gameObject, 0.75f);
    }
 
    private void Update()
@@ -247,7 +260,7 @@ public class MovingCube : MonoBehaviour
 
       if (_changeColor)
       {
-         Color colour = Color.Lerp(_materialPropertyBlock.GetColor("_Color"), Color.white, 24 * Time.deltaTime);
+         Color colour = Color.Lerp(_materialPropertyBlock.GetColor("_Color"), Color.white, 36 * Time.deltaTime);
          
          _materialPropertyBlock.SetColor("_Color", colour);
       

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class GameManager : MonoBehaviour
     public static MovingCube FirstCube;
 
     public static ParticleSystem particalSystem;
+
+    public static int Combo;
+
+    public static int ScoreStatic;
+    
+    public float cameraSmoothTime;
     
     public Transform camera;
-
-    private Vector3 _targetCameraPos;
 
     public TextMeshProUGUI scoreText;
 
@@ -20,19 +25,19 @@ public class GameManager : MonoBehaviour
     private CubeSpawner[] _spawners;
     
     private CubeSpawner _currentSpawner;
-    
-    private int _spawnerIndex;
 
     private int _score;
     
-    private int _cameraIndex = 0;
+    private int _spawnerIndex;
+
+    private int _cameraIndex;
 
     private bool startClick = true;
    
     private Vector3 velocity;
-   
-    public float cameraSmoothTime;
     
+    private Vector3 _targetCameraPos;
+
 
 
     private void Awake()
@@ -46,6 +51,8 @@ public class GameManager : MonoBehaviour
         _targetCameraPos = camera.transform.position;
 
         ColorIndex = 0;
+
+        Combo = 0;
     }
 
 
@@ -53,16 +60,12 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            scoreText.gameObject.SetActive(true);
-        
             startGameText.gameObject.SetActive(false);
             
             if (MovingCube.CurrentCube != null && !startClick)
             {
                 MovingCube.CurrentCube.Stop();
             }
-
-            scoreText.text = _score.ToString();
 
             _spawnerIndex = (_spawnerIndex == 0 ? 1 : 0);
           
@@ -76,16 +79,43 @@ public class GameManager : MonoBehaviour
             }
 
             _cameraIndex++;
-            
-            _score++;
 
             startClick = false;
+            
+            Score();
         }
-        
+
         if (camera.localPosition != _targetCameraPos)
         {
             camera.localPosition = Vector3.SmoothDamp(camera.localPosition, _targetCameraPos, ref velocity, cameraSmoothTime);
         }
+    }
+
+    private void Score()
+    {
+        if (!scoreText.gameObject.activeSelf)
+        {
+            scoreText.gameObject.SetActive(true);
+        }
+
+        scoreText.text = _score.ToString();
+
+        if (Combo > 3)
+        {
+            _score += 3;
+        }
+        
+        else if (Combo > 6)
+        {
+            _score += 6;
+        }
+
+        else
+        {
+            _score++;
+        }
+
+        ScoreStatic = _score;
     }
 
     public static void IncreaseColorIndex(int i)
