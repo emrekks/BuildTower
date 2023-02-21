@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     public static int ColorIndex;
 
     public static MovingCube FirstCube;
+
+    public static ParticleSystem particalSystem;
     
     public Transform camera;
 
@@ -35,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        particalSystem =  GameObject.FindGameObjectWithTag("Particle").GetComponent<ParticleSystem>();
+        
         FirstCube = GameObject.Find("FirstCube").GetComponent<MovingCube>();
         
         _spawners = FindObjectsOfType<CubeSpawner>();

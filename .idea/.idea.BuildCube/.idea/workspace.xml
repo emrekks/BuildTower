@@ -92,6 +92,9 @@
       <workItem from="1676562368126" duration="666000" />
       <workItem from="1676583239055" duration="8435000" />
       <workItem from="1676591774153" duration="733000" />
+      <workItem from="1676622989178" duration="1766000" />
+      <workItem from="1676886182985" duration="3529000" />
+      <workItem from="1676933731438" duration="8282000" />
     </task>
     <servers />
   </component>
@@ -109,39 +112,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
-          <line>74</line>
-          <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="70" containingFunctionPresentation="method 'GameOver'">
-            <startOffsets>
-              <option value="1645" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1671" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
-          <line>162</line>
-          <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="158" containingFunctionPresentation="method 'SpawnDropPartOfCube'">
-            <startOffsets>
-              <option value="4679" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4737" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
-          <line>37</line>
+          <line>52</line>
           <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="33" containingFunctionPresentation="method 'GetRandomColor'">
             <startOffsets>
-              <option value="919" />
+              <option value="1407" />
             </startOffsets>
             <endOffsets>
-              <option value="956" />
+              <option value="1444" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="8" />

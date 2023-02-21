@@ -7,16 +7,25 @@ public class MovingCube : MonoBehaviour
    public static MovingCube LastCube { get; private set; }
 
    public Color[] color;
-
+   private Color _firstColor;
+   private bool _changeColor;
+   private bool _backToFirstColor;
+   public Renderer renderer;
    public MoveDirection MoveDirection { get; set; }
+   private bool _onComplete;
+   private MaterialPropertyBlock _materialPropertyBlock;
 
    [SerializeField] private int moveSpeed = 2;
-   [SerializeField] private float tolerance = 0.05f;
+   [SerializeField] private float tolerance = 0.03f;
+
+   public ParticleSystem comboParticleSystem;
    
    private int m_MoveSpeed;
 
    private void OnEnable()
    {
+      comboParticleSystem = GameManager.particalSystem;
+               
       m_MoveSpeed = moveSpeed;
       
       if (LastCube == null)
@@ -26,11 +35,17 @@ public class MovingCube : MonoBehaviour
 
       CurrentCube = this;
 
-      GetComponent<Renderer>().material.color = GetRandomColor();
+      _firstColor = GetRandomColor();
 
       GameManager.IncreaseColorIndex(color.Length);
 
       transform.localScale = new Vector3(LastCube.transform.localScale.x, transform.localScale.y, LastCube.transform.localScale.z);
+
+      _materialPropertyBlock = new MaterialPropertyBlock();
+
+      _materialPropertyBlock.SetColor("_Color", _firstColor);
+      
+      renderer.SetPropertyBlock(_materialPropertyBlock);
    }
 
    private Color GetRandomColor()
@@ -99,11 +114,15 @@ public class MovingCube : MonoBehaviour
          if (LastCube == GameManager.FirstCube)
          {
             CurrentCube.transform.position = new Vector3(LastCube.transform.position.x,LastCube.transform.position.y + 0.3f, LastCube.transform.position.z);
+            
+            CallParticleSystem();
          }
          
          else
          {
             CurrentCube.transform.position = new Vector3(LastCube.transform.position.x,LastCube.transform.position.y + 0.1f, LastCube.transform.position.z);
+            
+            CallParticleSystem();
          }
       }
 
@@ -120,7 +139,10 @@ public class MovingCube : MonoBehaviour
          float fallingBlockZPosition = cubeEdge + fallingBlockSize / 2f * direction;
 
          SpawnDropPartOfCube(fallingBlockZPosition, fallingBlockSize);
+
+         _changeColor = true;
       }
+      
    }
    
    private void SplitCubeOnX(float distance, float direction)
@@ -134,11 +156,15 @@ public class MovingCube : MonoBehaviour
          if (LastCube == GameManager.FirstCube)
          {
             CurrentCube.transform.position = new Vector3(LastCube.transform.position.x,LastCube.transform.position.y + 0.3f, LastCube.transform.position.z);
+            
+            CallParticleSystem();
          }
          
          else
          {
             CurrentCube.transform.position = new Vector3(LastCube.transform.position.x,LastCube.transform.position.y + 0.1f, LastCube.transform.position.z);
+
+            CallParticleSystem();
          }
       }
 
@@ -155,7 +181,20 @@ public class MovingCube : MonoBehaviour
          float fallingBlockXPosition = cubeEdge + fallingBlockSize / 2f * direction;
 
          SpawnDropPartOfCube(fallingBlockXPosition, fallingBlockSize);
+         
+         _changeColor = true;
       }
+   }
+
+   private void CallParticleSystem()
+   {
+      comboParticleSystem.transform.position = new Vector3(CurrentCube.transform.position.x, CurrentCube.transform.position.y, CurrentCube.transform.position.z);
+      
+      comboParticleSystem.transform.localScale = new Vector3(CurrentCube.transform.localScale.x / 2, CurrentCube.transform.localScale.z / 2, 0.5f);
+
+      comboParticleSystem.gameObject.SetActive(true);
+     
+      comboParticleSystem.Play();
    }
 
    private void SpawnDropPartOfCube(float fallingBlockZPosition, float fallingBlockSize)
@@ -178,8 +217,8 @@ public class MovingCube : MonoBehaviour
      
       cube.AddComponent<Rigidbody>();
      
-      cube.GetComponent<Renderer>().material.color = GetComponent<Renderer>().material.color;
-    
+      cube.GetComponent<Renderer>().SetPropertyBlock(_materialPropertyBlock);
+
       Destroy(cube.gameObject, 1f);
    }
 
@@ -203,6 +242,30 @@ public class MovingCube : MonoBehaviour
          {
             GameOver();
          }
+      }
+
+      if (_changeColor)
+      {
+         Color colour = Color.Lerp(_materialPropertyBlock.GetColor("_Color"), Color.white, 24 * Time.deltaTime);
+         
+         _materialPropertyBlock.SetColor("_Color", colour);
+      
+         renderer.SetPropertyBlock(_materialPropertyBlock);
+         
+         if (_materialPropertyBlock.GetColor("_Color") == Color.white)
+         {
+            _changeColor = false;
+            _backToFirstColor = true;
+         }
+      }
+
+      else if (!_changeColor)
+      {
+         Color colour = Color.Lerp(_materialPropertyBlock.GetColor("_Color"), _firstColor, 36 * Time.deltaTime);
+         
+         _materialPropertyBlock.SetColor("_Color", colour);
+      
+         renderer.SetPropertyBlock(_materialPropertyBlock);
       }
    }
 }

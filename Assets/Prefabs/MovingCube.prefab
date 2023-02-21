@@ -122,5 +122,7 @@ MonoBehaviour:
   - {r: 1, g: 0.7148371, b: 0.5707547, a: 1}
   - {r: 1, g: 0.58431375, b: 0.45882353, a: 1}
   - {r: 1, g: 0.47843137, b: 0.43921572, a: 1}
+  renderer: {fileID: 544850998707414711}
   moveSpeed: 2
   tolerance: 0.03
+  comboParticleSystem: {fileID: 0}
