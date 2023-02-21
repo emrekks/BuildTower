@@ -95,6 +95,7 @@
       <workItem from="1676622989178" duration="1766000" />
       <workItem from="1676886182985" duration="3529000" />
       <workItem from="1676933731438" duration="8282000" />
+      <workItem from="1676942204480" duration="162000" />
     </task>
     <servers />
   </component>
@@ -112,13 +113,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/MovingCube.cs</url>
-          <line>52</line>
+          <line>53</line>
           <properties documentPath="C:\Users\emrek\OneDrive\Masaüstü\BuildCube\Assets\Scripts\MovingCube.cs" initialLine="33" containingFunctionPresentation="method 'GetRandomColor'">
             <startOffsets>
-              <option value="1407" />
+              <option value="1381" />
             </startOffsets>
             <endOffsets>
-              <option value="1444" />
+              <option value="1418" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="8" />

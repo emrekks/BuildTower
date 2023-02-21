@@ -11,8 +11,9 @@ public class MovingCube : MonoBehaviour
    private bool _changeColor;
    private bool _backToFirstColor;
    public Renderer renderer;
+ 
    public MoveDirection MoveDirection { get; set; }
-   private bool _onComplete;
+
    private MaterialPropertyBlock _materialPropertyBlock;
 
    [SerializeField] private int moveSpeed = 2;
@@ -228,7 +229,7 @@ public class MovingCube : MonoBehaviour
       {
          transform.position += -transform.forward * Time.deltaTime * m_MoveSpeed;
          
-         if (transform.position.z <= -7.5f)
+         if (transform.position.z <= -2f)
          {
             GameOver();
          }
@@ -238,7 +239,7 @@ public class MovingCube : MonoBehaviour
       {
          transform.position += transform.right * Time.deltaTime * m_MoveSpeed;
          
-         if (transform.position.x >= 6.65f)
+         if (transform.position.x >= 2f)
          {
             GameOver();
          }
